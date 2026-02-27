@@ -43,7 +43,7 @@ export function SystemHealthWidget({
       aria-label="System Health Overview"
     >
       <CardHeader>
-        <CardTitle>System Health</CardTitle>
+        <CardTitle className="text-xl">System Health</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="flex justify-center">

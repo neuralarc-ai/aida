@@ -5,24 +5,32 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
   LayoutDashboard,
-  Users,
-  Activity,
-  CheckSquare,
-  Zap,
-  BarChart3,
   ChevronLeft,
   ChevronRight,
+  Settings,
+  MessageSquare,
+  Bot,
+  Brain,
+  FileText,
+  Activity,
+  CheckSquare,
 } from "lucide-react";
-import { RiRobot2Line } from "@remixicon/react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { useState } from "react";
 
 const navItems = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { name: "Agents", href: "/agents", icon: Users },
-  { name: "Activity", href: "/activity", icon: Activity },
+  { name: "Channels", href: "/channels", icon: MessageSquare },
+  { name: "Agents", href: "/agents", icon: Bot },
+  { name: "Skills", href: "/skills", icon: Brain },
+  { name: "Sessions", href: "/sessions", icon: Activity },
   { name: "Tasks", href: "/tasks", icon: CheckSquare },
-  { name: "Skills", href: "/skills", icon: Zap },
-  { name: "Usage", href: "/usage", icon: BarChart3 },
+  { name: "Logs", href: "/logs", icon: FileText },
+  { name: "Settings", href: "/settings", icon: Settings },
 ];
 
 export function Sidebar() {
@@ -33,13 +41,13 @@ export function Sidebar() {
     <div
       className={cn(
         "relative flex h-screen flex-col border-r bg-background transition-all duration-300",
-        isCollapsed ? "w-16" : "w-64"
+        isCollapsed ? "w-16" : "w-64",
       )}
     >
       {/* Logo */}
       <div className="flex h-16 items-center border-b px-6 justify-between">
         <div className="flex items-center gap-2">
-          <RiRobot2Line className="h-6 w-6 shrink-0" />
+          <Bot className="h-6 w-6 shrink-0" />
           {!isCollapsed && <h1 className="text-2xl font-bold">AIDA</h1>}
         </div>
         {!isCollapsed && (
@@ -66,7 +74,7 @@ export function Sidebar() {
           const Icon = item.icon;
           const isActive = pathname === item.href;
 
-          return (
+          const linkContent = (
             <Link
               key={item.href}
               href={item.href}
@@ -75,14 +83,26 @@ export function Sidebar() {
                 isActive
                   ? "bg-primary text-zinc-800"
                   : "text-foreground hover:bg-muted",
-                isCollapsed && "justify-center"
+                isCollapsed && "justify-center",
               )}
-              title={isCollapsed ? item.name : undefined}
             >
               <Icon className="h-5 w-5 shrink-0" />
               {!isCollapsed && <span>{item.name}</span>}
             </Link>
           );
+
+          if (isCollapsed) {
+            return (
+              <Tooltip key={item.href} delayDuration={0}>
+                <TooltipTrigger asChild>{linkContent}</TooltipTrigger>
+                <TooltipContent side="right">
+                  <p>{item.name}</p>
+                </TooltipContent>
+              </Tooltip>
+            );
+          }
+
+          return linkContent;
         })}
       </nav>
     </div>

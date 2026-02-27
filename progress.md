@@ -35,23 +35,23 @@
 
 ## Quick Status
 
-| Component           | Status      | Notes                                      |
-| ------------------- | ----------- | ------------------------------------------ |
-| Project Setup       | ✅ Complete | Next.js 15+, TypeScript, Tailwind v4       |
-| Root Layout         | ✅ Complete | ThemeProvider, fonts configured            |
-| Main Layout         | ✅ Complete | Sidebar + TopNavbar structure              |
-| Sidebar Navigation  | ✅ Complete | Collapsible, 6 nav items, active states    |
-| Top Navbar          | ✅ Complete | Search bar, theme toggle, profile dropdown |
-| Custom Palette      | ✅ Complete | globals.css with light/dark themes         |
-| shadcn/ui Config    | ✅ Complete | New York style, RSC enabled                |
-| Utils               | ✅ Complete | cn() helper for className merging          |
-| BentoGrid Component | ✅ Complete | Responsive grid layout component           |
-| Dummy Data          | ✅ Complete | data/ directory with static data files     |
-| Dashboard Page      | ✅ Complete | 6 Bento widgets with full functionality    |
-| Dashboard Widgets   | ✅ Complete | All 6 widgets implemented                  |
-| Mock API            | ⏳ Pending  | src/mocks/api.ts with delays               |
-| Zustand Stores      | ⏳ Pending  | State management setup                     |
-| Other Pages         | 🚧 Skeleton | Placeholder implementations                |
+| Component           | Status      | Notes                                     |
+| ------------------- | ----------- | ----------------------------------------- |
+| Project Setup       | ✅ Complete | Next.js 15+, TypeScript, Tailwind v4      |
+| Root Layout         | ✅ Complete | ThemeProvider, TooltipProvider configured |
+| Main Layout         | ✅ Complete | Sidebar + TopNavbar structure             |
+| Sidebar Navigation  | ✅ Complete | Collapsible with tooltips, 8 nav items    |
+| Top Navbar          | ✅ Complete | Search bar, theme dropdown, profile       |
+| Custom Palette      | ✅ Complete | globals.css with light/dark themes        |
+| shadcn/ui Config    | ✅ Complete | New York style, RSC enabled               |
+| Utils               | ✅ Complete | cn() helper for className merging         |
+| BentoGrid Component | ✅ Complete | Responsive grid layout component          |
+| Dummy Data          | ✅ Complete | data/ directory with static data files    |
+| Dashboard Page      | ✅ Complete | Stat cards + 4 widgets with functionality |
+| Dashboard Widgets   | ✅ Complete | All widgets implemented and refined       |
+| Other Pages         | ✅ Complete | Channels, Sessions, Logs pages done       |
+| Mock API            | ⏳ Pending  | src/mocks/api.ts with delays              |
+| Zustand Stores      | ⏳ Pending  | State management setup                    |
 
 ---
 
@@ -99,8 +99,8 @@
 **Dependencies Installed**:
 
 - Core: next@16.1.6, react@19.2.3, react-dom@19.2.3
-- UI: @remixicon/react, lucide-react, next-themes
-- Utilities: class-variance-authority, clsx, tailwind-merge
+- UI: @remixicon/react, lucide-react, next-themes, class-variance-authority
+- Utilities: clsx, tailwind-merge
 - Dev: TypeScript 5, Tailwind CSS v4, ESLint
 
 **Next Steps**:
@@ -212,6 +212,93 @@
 **Next Steps**:
 
 - Implement remaining pages (Agents, Skills, Channels, Sessions, Tasks, Settings, Logs)
+- Add Zustand stores for state management and CRUD operations
+- Create mock API functions with setTimeout delays for realism
+- Build out interactive features (create/edit/delete flows)
+- Add more shadcn/ui components as needed (Dialog, Form, Table, etc.)
+
+---
+
+### 2026-02-27 - UI/UX Refinements & Theme Integration
+
+**Theme System Enhancement**:
+
+- Integrated next-themes for theme switching:
+  - Created ThemeProvider wrapper component (components/theme-provider.tsx)
+  - Added TooltipProvider to root layout for global tooltip support
+  - Updated root layout with suppressHydrationWarning for theme
+- Updated Top Navbar theme toggle:
+  - Replaced Switch with Dropdown menu
+  - Added Light/Dark/System theme options with icons
+  - Dynamic icon display based on current theme (Sun/Moon)
+
+**Sidebar Improvements**:
+
+- Enhanced collapsible sidebar functionality:
+  - Added proper tooltip support when collapsed using shadcn Tooltip
+  - Tooltips appear instantly (delayDuration={0}) on hover
+  - Positioned tooltips to the right side of collapsed sidebar
+  - Smooth collapse/expand animation maintained
+- Updated navigation structure:
+  - Expanded from 6 to 8 navigation items
+  - Added: Channels (MessageSquare), Skills (Brain), Sessions (Activity), Logs (FileText)
+  - Reordered for better UX flow
+  - Changed logo from RiRobot2Line to Bot icon from lucide-react
+- Improved collapse button positioning:
+  - Inside header when expanded (ChevronLeft)
+  - Outside sidebar when collapsed (ChevronRight) with absolute positioning
+
+**Dashboard Redesign**:
+
+- Replaced System Health card with individual stat cards:
+  - Created StatCard component (components/dashboard/stat-card.tsx)
+  - 4 stat cards in responsive grid (1/2/4 columns on mobile/tablet/desktop)
+  - Stats: Active Agents (2), Connected Channels (4), Unread Messages (23), Active Tasks (2)
+  - Each card shows icon, large number, and descriptive label
+- Removed ChannelSummaryWidget (data now in stat cards)
+- Updated QuickActionsWidget:
+  - Changed from vertical button list to 2x2 grid of square icon buttons
+  - 4 actions: Channels, Agents, Sessions, Tasks
+  - Each button is square (aspect-square) with centered icon and label
+  - Hover effects with background color transition
+- Simplified dashboard layout:
+  - Row 1: 4 stat cards
+  - Row 2: Recent Tasks (2 cols) + Quick Actions (1 col)
+  - Row 3: Active Agents + Recent Sessions
+
+**Color Palette Consistency**:
+
+- Replaced hardcoded colors with semantic tokens:
+  - Sidebar: `bg-accent text-accent-foreground` for active state (was bg-blue-50 text-blue-600)
+  - Sidebar: `text-foreground hover:bg-muted` for inactive state (was text-gray-700 hover:bg-gray-100)
+  - Top Navbar: `bg-muted hover:bg-muted/80` for profile button (was bg-gray-200 hover:bg-gray-300)
+  - All components now use globals.css color variables exclusively
+
+**shadcn/ui Components Added**:
+
+- Tooltip, TooltipContent, TooltipTrigger (sidebar tooltips)
+- Dropdown menu components already existed, enhanced usage
+
+**Files Created/Modified**:
+
+- components/theme-provider.tsx (new)
+- components/dashboard/stat-card.tsx (new)
+- components/ui/tooltip.tsx (new - via shadcn CLI)
+- components/sidebar.tsx (updated - tooltips, navigation items, logo)
+- components/top-navbar.tsx (updated - theme dropdown)
+- components/dashboard/quick-actions-widget.tsx (updated - grid layout)
+- app/(main)/dashboard/page.tsx (updated - stat cards, removed channel widget)
+- app/layout.tsx (updated - TooltipProvider added)
+
+**Pages Implemented**:
+
+- app/(main)/channels/page.tsx - Bento grid of channel cards with status badges
+- app/(main)/sessions/page.tsx - List of session cards with channel info
+- app/(main)/logs/page.tsx - Scrollable log viewer with timestamp and level badges
+
+**Next Steps**:
+
+- Implement remaining pages (Agents, Skills, Tasks, Settings)
 - Add Zustand stores for state management and CRUD operations
 - Create mock API functions with setTimeout delays for realism
 - Build out interactive features (create/edit/delete flows)

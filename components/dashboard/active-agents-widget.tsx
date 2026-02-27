@@ -46,12 +46,12 @@ export function ActiveAgentsWidget({
 
   return (
     <Card
-      className={cn("col-span-1 md:col-span-2 lg:col-span-2", className)}
+      className={cn("", className)}
       role="region"
       aria-label="Active Agents"
     >
       <CardHeader>
-        <CardTitle>Active Agents</CardTitle>
+        <CardTitle className="text-xl">Active Agents</CardTitle>
       </CardHeader>
       <CardContent>
         <ScrollArea className="h-[280px] pr-4">

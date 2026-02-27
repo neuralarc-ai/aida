@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
+import { Button } from "../ui/button";
 
 interface Task {
   id: string;
@@ -53,8 +54,15 @@ export function RecentTasksWidget({
       role="region"
       aria-label="Recent Tasks"
     >
-      <CardHeader>
-        <CardTitle>Recent Tasks</CardTitle>
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <CardTitle className="text-xl">Recent Tasks</CardTitle>
+        <Button asChild>
+          <Link
+            href="/tasks"
+          >
+            View all tasks
+          </Link>
+        </Button>
       </CardHeader>
       <CardContent>
         {displayedTasks.length === 0 ? (
@@ -105,14 +113,14 @@ export function RecentTasksWidget({
             </div>
           </ScrollArea>
         )}
-        <div className="mt-4 pt-4 border-t border-border">
+        {/* <div className="mt-4 pt-4 border-t border-border">
           <Link
             href="/tasks"
             className="text-sm text-primary hover:underline font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded"
           >
             View all tasks
           </Link>
-        </div>
+        </div> */}
       </CardContent>
     </Card>
   );

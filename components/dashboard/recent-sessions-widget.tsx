@@ -37,12 +37,12 @@ export function RecentSessionsWidget({
 
   return (
     <Card
-      className={cn("col-span-1 md:col-span-2 lg:col-span-2", className)}
+      className={cn("", className)}
       role="region"
       aria-label="Recent Sessions"
     >
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
+        <CardTitle className="flex items-center gap-2 text-xl">
           <MessageSquare className="h-5 w-5" aria-hidden="true" />
           Recent Sessions
         </CardTitle>

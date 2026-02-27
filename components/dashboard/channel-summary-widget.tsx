@@ -20,7 +20,7 @@ export function ChannelSummaryWidget({
       aria-label="Channel Summary"
     >
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
+        <CardTitle className="flex items-center gap-2 text-xl">
           <MessageSquare className="h-5 w-5" aria-hidden="true" />
           Channels
         </CardTitle>
