@@ -1,0 +1,51 @@
+// src/data/static-skills.ts
+export const staticSkills = [
+  {
+    id: "skill-1",
+    name: "Email Read",
+    description: "Read and summarize incoming emails",
+    category: "Communication",
+    installed: true,
+    assignedTo: ["agent-1"],
+  },
+  {
+    id: "skill-2",
+    name: "Web Search",
+    description: "Perform real-time web searches",
+    category: "Research",
+    installed: true,
+    assignedTo: ["agent-2"],
+  },
+  {
+    id: "skill-3",
+    name: "Image Generate",
+    description: "Create images from text prompts",
+    category: "Creative",
+    installed: true,
+    assignedTo: ["agent-5"],
+  },
+  {
+    id: "skill-4",
+    name: "Flight Search",
+    description: "Search and compare flight options",
+    category: "Travel",
+    installed: false,
+    assignedTo: [],
+  },
+  {
+    id: "skill-5",
+    name: "Calendar Create",
+    description: "Create events and send invites",
+    category: "Productivity",
+    installed: true,
+    assignedTo: ["agent-3"],
+  },
+  {
+    id: "skill-6",
+    name: "PDF Extract",
+    description: "Extract text/tables from PDFs",
+    category: "Documents",
+    installed: true,
+    assignedTo: ["agent-2"],
+  },
+];

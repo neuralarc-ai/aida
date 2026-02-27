@@ -1,0 +1,48 @@
+// src/data/static-channels.ts
+export const staticChannels = [
+  {
+    id: "ch-1",
+    type: "WhatsApp",
+    name: "Personal WhatsApp",
+    status: "connected",
+    unread: 2,
+    lastMessage: "Hey, can you check my flight?",
+    icon: "MessageCircle",
+  },
+  {
+    id: "ch-2",
+    type: "Telegram",
+    name: "Work Group",
+    status: "connected",
+    unread: 0,
+    lastMessage: "Meeting notes uploaded",
+    icon: "Send",
+  },
+  {
+    id: "ch-3",
+    type: "Discord",
+    name: "AI Dev Server",
+    status: "connected",
+    unread: 7,
+    lastMessage: "New skill: web-scrape-v2",
+    icon: "MessageSquare",
+  },
+  {
+    id: "ch-4",
+    type: "Slack",
+    name: "Team Channel",
+    status: "disconnected",
+    unread: 0,
+    lastMessage: "—",
+    icon: "Slack",
+  },
+  {
+    id: "ch-5",
+    type: "Email",
+    name: "Primary Gmail",
+    status: "connected",
+    unread: 14,
+    lastMessage: "Invoice #INV-456",
+    icon: "Mail",
+  },
+];
