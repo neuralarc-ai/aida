@@ -1,8 +1,8 @@
 "use client";
 
-import { Search, Moon, Settings, LogOut } from "lucide-react";
+import { Search, Moon, Sun, Settings, LogOut, Laptop } from "lucide-react";
+import { useTheme } from "next-themes";
 import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,8 +11,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
+import { Button } from "./ui/button";
 
 export function TopNavbar() {
+  const { theme, setTheme } = useTheme();
+
   return (
     <div className="flex h-16 items-center justify-between border-b bg-background px-6">
       {/* Left side - empty for spacing */}
@@ -30,15 +33,39 @@ export function TopNavbar() {
 
       {/* Right side - Theme toggle and Profile */}
       <div className="flex w-48 items-center justify-end gap-4">
-        <div className="flex items-center gap-2">
-          <Moon className="h-4 w-4 text-muted-foreground" />
-          <Switch />
-        </div>
+        {/* Theme Dropdown */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size={"icon"} className="flex h-8 w-8 items-center justify-center rounded-md hover:bg-muted transition-colors">
+              {theme === "dark" ? (
+                <Moon className="h-4 w-4" />
+              ) : theme === "light" ? (
+                <Sun className="h-4 w-4" />
+              ) : (
+                <Laptop className="h-4 w-4" />
+              )}
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={() => setTheme("light")}>
+              <Sun className="h-4 w-4" />
+              <span>Light</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setTheme("dark")}>
+              <Moon className="h-4 w-4" />
+              <span>Dark</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setTheme("system")}>
+              <Settings className="h-4 w-4" />
+              <span>System</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
         {/* Profile Dropdown */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 hover:bg-gray-300 transition-colors">
+            <button className="flex h-8 w-8 items-center justify-center rounded-full bg-muted hover:bg-muted/80 transition-colors">
               <span className="text-sm font-medium">B</span>
             </button>
           </DropdownMenuTrigger>
