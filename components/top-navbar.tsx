@@ -1,6 +1,14 @@
 "use client";
 
-import { Search, Moon, Sun, Settings, LogOut, Laptop } from "lucide-react";
+import {
+  Search,
+  Moon,
+  Sun,
+  Settings,
+  LogOut,
+  Laptop,
+  Menu,
+} from "lucide-react";
 import { useTheme } from "next-themes";
 import { Input } from "@/components/ui/input";
 import {
@@ -13,16 +21,30 @@ import {
 import Link from "next/link";
 import { Button } from "./ui/button";
 
-export function TopNavbar() {
+interface TopNavbarProps {
+  onMobileMenuToggle?: () => void;
+}
+
+export function TopNavbar({ onMobileMenuToggle }: TopNavbarProps) {
   const { theme, setTheme } = useTheme();
 
   return (
-    <div className="flex h-16 items-center justify-between border-b bg-background px-6">
-      {/* Left side - empty for spacing */}
-      <div className="w-48" />
+    <div className="flex h-16 items-center justify-between border-b bg-background px-4 md:px-6">
+      {/* Left side - Mobile menu button */}
+      <div className="flex items-center gap-4">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="md:hidden"
+          onClick={onMobileMenuToggle}
+        >
+          <Menu className="h-5 w-5" />
+        </Button>
+        <div className="hidden md:block w-48" />
+      </div>
 
       {/* Center - Search bar */}
-      <div className="relative flex-1 max-w-2xl">
+      <div className="relative flex-1 max-w-2xl hidden sm:block">
         <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         <Input
           type="search"
@@ -32,11 +54,20 @@ export function TopNavbar() {
       </div>
 
       {/* Right side - Theme toggle and Profile */}
-      <div className="flex w-48 items-center justify-end gap-4">
+      <div className="flex items-center justify-end gap-2 md:gap-4 md:w-48">
+        {/* Mobile Search Icon */}
+        <Button variant="ghost" size="icon" className="sm:hidden h-8 w-8">
+          <Search className="h-4 w-4" />
+        </Button>
+
         {/* Theme Dropdown */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" size={"icon"} className="flex h-8 w-8 items-center justify-center rounded-md hover:bg-muted transition-colors">
+            <Button
+              variant="outline"
+              size={"icon"}
+              className="flex h-8 w-8 items-center justify-center rounded-md hover:bg-muted transition-colors"
+            >
               {theme === "dark" ? (
                 <Moon className="h-4 w-4" />
               ) : theme === "light" ? (

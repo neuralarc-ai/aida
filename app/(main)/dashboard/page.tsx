@@ -30,7 +30,7 @@ export default function DashboardPage() {
 
       <div className="space-y-6">
         {/* Stats Row */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <StatCard
             icon={Activity}
             value={activeAgentCount}
@@ -54,20 +54,20 @@ export default function DashboardPage() {
         </div>
 
         {/* Recent Tasks and Quick Actions Row */}
-        <div className="grid grid-cols-3 gap-6 items-start">
-          <div className="col-span-2 h-full">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+          <div className="lg:col-span-2 h-full">
             <RecentTasksWidget
               tasks={staticTasks.slice(0, 4)}
               className="h-full"
             />
           </div>
-          <div className="col-span-1">
+          <div className="lg:col-span-1">
             <QuickActionsWidget />
           </div>
         </div>
 
         {/* Active Agents and Recent Sessions Row */}
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <ActiveAgentsWidget agents={staticAgents.slice(0, 5)} className="" />
           <RecentSessionsWidget
             sessions={staticSessions.slice(0, 3)}

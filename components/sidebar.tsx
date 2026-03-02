@@ -14,6 +14,7 @@ import {
   FileText,
   Activity,
   CheckSquare,
+  X,
 } from "lucide-react";
 import {
   Tooltip,
@@ -33,78 +34,109 @@ const navItems = [
   { name: "Settings", href: "/settings", icon: Settings },
 ];
 
-export function Sidebar() {
+interface SidebarProps {
+  isMobileOpen?: boolean;
+  onMobileClose?: () => void;
+}
+
+export function Sidebar({ isMobileOpen = false, onMobileClose }: SidebarProps) {
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   return (
-    <div
-      className={cn(
-        "relative flex h-screen flex-col border-r bg-background transition-all duration-300",
-        isCollapsed ? "w-16" : "w-64",
+    <>
+      {/* Mobile Overlay */}
+      {isMobileOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          onClick={onMobileClose}
+        />
       )}
-    >
-      {/* Logo */}
-      <div className="flex h-16 items-center border-b px-6 justify-between">
-        <div className="flex items-center gap-2">
-          <Bot className="h-6 w-6 shrink-0" />
-          {!isCollapsed && <h1 className="text-2xl font-bold">AIDA</h1>}
-        </div>
-        {!isCollapsed && (
-          <button
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            className="p-1.5 rounded-md hover:bg-muted transition-colors"
-          >
-            <ChevronLeft className="h-5 w-5" />
-          </button>
-        )}
-        {isCollapsed && (
-          <button
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            className="absolute top-5 -right-4 p-1 bg-background border hover:bg-muted transition-colors"
-          >
-            <ChevronRight className="h-4 w-4" />
-          </button>
-        )}
-      </div>
 
-      {/* Navigation */}
-      <nav className="flex-1 space-y-1 p-4">
-        {navItems.map((item) => {
-          const Icon = item.icon;
-          const isActive = pathname === item.href;
-
-          const linkContent = (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors",
-                isActive
-                  ? "bg-primary text-zinc-800"
-                  : "text-foreground hover:bg-muted",
-                isCollapsed && "justify-center",
-              )}
+      {/* Sidebar */}
+      <div
+        className={cn(
+          "relative flex h-screen flex-col border-r bg-background transition-all duration-300",
+          // Desktop behavior
+          "hidden md:flex",
+          isCollapsed ? "w-16" : "w-64",
+          // Mobile behavior - overlay
+          isMobileOpen && "fixed inset-y-0 left-0 z-50 flex w-64 md:relative",
+        )}
+      >
+        {/* Logo */}
+        <div className="flex h-16 items-center border-b px-6 justify-between">
+          <div className="flex items-center gap-2">
+            <Bot className="h-6 w-6 shrink-0" />
+            {!isCollapsed && <h1 className="text-2xl font-bold">AIDA</h1>}
+          </div>
+          {/* Desktop collapse button */}
+          {!isCollapsed && (
+            <button
+              onClick={() => setIsCollapsed(!isCollapsed)}
+              className="hidden md:block p-1.5 rounded-md hover:bg-muted transition-colors"
             >
-              <Icon className="h-5 w-5 shrink-0" />
-              {!isCollapsed && <span>{item.name}</span>}
-            </Link>
-          );
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+          )}
+          {/* Mobile close button */}
+          {isMobileOpen && (
+            <button
+              onClick={onMobileClose}
+              className="md:hidden p-1.5 rounded-md hover:bg-muted transition-colors"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          )}
+          {isCollapsed && (
+            <button
+              onClick={() => setIsCollapsed(!isCollapsed)}
+              className="absolute top-5 -right-4 p-1 bg-background border hover:bg-muted transition-colors"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
+          )}
+        </div>
 
-          if (isCollapsed) {
-            return (
-              <Tooltip key={item.href} delayDuration={0}>
-                <TooltipTrigger asChild>{linkContent}</TooltipTrigger>
-                <TooltipContent side="right">
-                  <p>{item.name}</p>
-                </TooltipContent>
-              </Tooltip>
+        {/* Navigation */}
+        <nav className="flex-1 space-y-1 p-4">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = pathname === item.href;
+
+            const linkContent = (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={onMobileClose}
+                className={cn(
+                  "flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors",
+                  isActive
+                    ? "bg-primary text-zinc-800"
+                    : "text-foreground hover:bg-muted",
+                  isCollapsed && "justify-center",
+                )}
+              >
+                <Icon className="h-5 w-5 shrink-0" />
+                {!isCollapsed && <span>{item.name}</span>}
+              </Link>
             );
-          }
 
-          return linkContent;
-        })}
-      </nav>
-    </div>
+            if (isCollapsed) {
+              return (
+                <Tooltip key={item.href} delayDuration={0}>
+                  <TooltipTrigger asChild>{linkContent}</TooltipTrigger>
+                  <TooltipContent side="right">
+                    <p>{item.name}</p>
+                  </TooltipContent>
+                </Tooltip>
+              );
+            }
+
+            return linkContent;
+          })}
+        </nav>
+      </div>
+    </>
   );
 }

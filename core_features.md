@@ -20,7 +20,6 @@ Tracking file: progress.md (append milestones here after each major page/compone
 - **2. Channels Management**
   - Path: `/channels`
   - Purpose: View, add, configure, test connected channels (WhatsApp, Telegram, etc.)
-  - Layout: Yes – Bento tiles
   - Key shadcn Components: Card, Badge, Dialog (add wizard), Switch
   - Priority: High
   - Status: Planned
@@ -29,7 +28,6 @@ Tracking file: progress.md (append milestones here after each major page/compone
 - **3. Agents / Nodes Management**
   - Path: `/agents`
   - Purpose: Create, edit, assign skills to agents/nodes; view status and details
-  - Layout: Yes – Bento grid of agent cards
   - Key shadcn Components: Card, Badge, Dialog, Accordion, Form
   - Priority: High
   - Status: Planned
@@ -38,7 +36,6 @@ Tracking file: progress.md (append milestones here after each major page/compone
 - **4. Skills Management (installed + marketplace)**
   - Path: `/skills`
   - Purpose: Browse fake ClawHub marketplace, install skills, assign/uninstall to agents
-  - Layout: Yes – Bento tiles (larger for featured/popular)
   - Key shadcn Components: Card, Badge, Table/DataTable, Dialog
   - Priority: High
   - Status: Planned
@@ -65,7 +62,6 @@ Tracking file: progress.md (append milestones here after each major page/compone
 - **7. Configurations / Settings**
   - Path: `/settings`
   - Purpose: Edit global mock settings (LLM providers, toggles, integrations)
-  - Layout: Yes – Bento sections within tabs
   - Key shadcn Components: Tabs, Card, Form, Switch, Input
   - Priority: Medium
   - Status: Planned
