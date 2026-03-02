@@ -25,6 +25,7 @@ import { useState } from "react";
 
 const navItems = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { name: "Chat", href: "/chat", icon: MessageSquare },
   { name: "Channels", href: "/channels", icon: MessageSquare },
   { name: "Agents", href: "/agents", icon: Bot },
   { name: "Skills", href: "/skills", icon: Brain },

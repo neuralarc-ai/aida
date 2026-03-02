@@ -750,3 +750,105 @@
 - components/otp-input.tsx (fixed ref callback)
 
 **Build Status**: ✅ All pages compile successfully with no TypeScript errors
+
+---
+
+### 2026-03-02 - Chat Page Implementation with Mobile Responsiveness
+
+**Chat Page Complete** (app/(main)/chat/page.tsx):
+
+- Layout: Classic chat interface with session sidebar and main chat area
+- Client component ('use client') for real-time interactivity
+- **Session Sidebar** (left, 320px):
+  - Scrollable list of sessions from static data
+  - Session cards showing title, status badge, last message preview, and timestamp
+  - Click to switch between conversations
+  - Active session highlighting with accent background
+  - Mobile: Fixed overlay with dark backdrop, toggle via menu button
+  - Close button (X) for mobile sidebar
+- **Main Chat Area**:
+  - Header with session info (title, agent ID, channel) and status badge
+  - Mobile menu button (hamburger) to open sidebar
+  - ScrollArea for message history with auto-scroll to bottom
+  - Three message types with distinct styling:
+    - User messages: Blue background, right-aligned
+    - Assistant messages: Green background, left-aligned
+    - Tool messages: Purple background with tool name and status badges
+  - Avatar icons for each role (User, Bot, Wrench)
+  - Timestamps for each message
+  - Typing indicator with animated dots during streaming
+- **Input Form** (bottom):
+  - Textarea with auto-resize (min 50px mobile, 60px desktop)
+  - Send button (disabled when empty or streaming)
+  - Enter to send, Shift+Enter for new line
+  - Responsive sizing for mobile/desktop
+- **Optimistic UI**:
+  - User messages appear immediately
+  - Simulated 1s delay for assistant response (ready for WS integration)
+  - Streaming state with animated typing indicator
+
+**Mobile Responsiveness**:
+
+- Sidebar hidden by default on mobile, shown as fixed overlay when toggled
+- Menu button in header to open sidebar (visible only on mobile)
+- Close button in sidebar for mobile
+- Dark overlay behind sidebar when open
+- Auto-closes sidebar after selecting a session
+- Smaller avatars on mobile (7px vs 8px)
+- Adjusted message max-width (85% mobile vs 70% desktop)
+- Smaller input area on mobile (50px vs 60px height)
+- Responsive text sizes and icon sizes throughout
+- Better text truncation and wrapping for small screens
+- Proper gap spacing (2px mobile, 3px desktop)
+
+**Static Data Created**:
+
+- data/static-chat-messages.ts:
+  - ChatMessage interface with id, sessionId, role, content, timestamp
+  - Optional toolName and toolStatus for tool messages
+  - 10 dummy messages across 3 sessions
+  - getMessagesBySession() helper function
+- Updated data/index.ts to export chat messages
+
+**shadcn/ui Components Used**:
+
+- Card (sidebar and main area containers)
+- Badge (status and tool indicators)
+- Button (send, menu, close buttons)
+- ScrollArea (session list and message history)
+- Textarea (message input) - newly added via shadcn CLI
+- Lucide icons (Send, Bot, User, Wrench, Menu, X)
+
+**Design Decisions**:
+
+- Chose classic chat layout over Bento for optimal conversation flow
+- Session sidebar provides context and easy switching
+- Mobile-first responsive design with overlay sidebar pattern
+- Color-coded message roles for quick identification
+- Auto-scroll ensures latest messages are always visible
+- Optimistic UI provides instant feedback
+- Ready for WebSocket integration (replace setTimeout with WS send/receive)
+
+**Files Created/Modified**:
+
+- app/(main)/chat/page.tsx (complete implementation)
+- data/static-chat-messages.ts (new)
+- data/index.ts (updated to export chat messages)
+- components/ui/textarea.tsx (added via shadcn CLI)
+- components/sidebar.tsx (added Chat nav item with MessageSquare icon)
+
+**Integration Readiness**:
+
+- Structure prepared for OpenClaw Gateway WebSocket integration
+- Message sending logic ready to replace with WS sendReq('chat.send', ...)
+- Streaming response ready to handle WS chat events with deltas
+- Session management ready for dynamic session list from WS
+- Optimistic UI pattern established for smooth UX
+
+**Next Steps**:
+
+- Create OpenClawContext provider for WebSocket connection
+- Integrate real-time message streaming via WS events
+- Add markdown rendering for message content (remark-gfm)
+- Implement session creation and management
+- Add file attachment support if protocol supports it

@@ -5,3 +5,4 @@ export * from "./static-skills";
 export * from "./static-sessions";
 export * from "./static-tasks";
 export * from "./static-logs";
+export * from "./static-chat-messages";
